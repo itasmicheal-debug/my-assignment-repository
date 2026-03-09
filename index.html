@@ -51,10 +51,75 @@
         nav ul li a:hover {
             color: #e9ecef;
         }
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 6px;
+        }
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: #fff;
+            border-radius: 2px;
+            transition: all 0.3s ease-in-out;
+        }
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(10px, 10px);
+        }
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
         section {
             padding: 80px 20px;
             max-width: 1200px;
             margin: 0 auto;
+        }
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+            nav ul {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: #0056b3;
+                padding: 20px 0;
+            }
+            nav ul.active {
+                display: flex;
+            }
+            nav ul li {
+                margin: 0;
+                padding: 15px 20px;
+                border-bottom: 1px solid rgba(255,255,255,0.1);
+            }
+            nav {
+                flex-wrap: wrap;
+                width: 100%;
+            }
+            nav h1 {
+                flex: 1;
+                margin: 0;
+            }
+            section {
+                padding: 80px 20px;
+            }
+            #hero {
+                padding: 120px 20px;
+            }
+            #hero h2 {
+                font-size: 2rem;
+            }
+            #hero p {
+                font-size: 1rem;
+            }
         }
         #hero {
             background: linear-gradient(to right, #007bff, #0056b3);
@@ -176,7 +241,12 @@
     <header>
         <nav>
             <h1>Ogoke Isaac Onyemauchechukwu</h1>
-            <ul>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul id="nav-menu">
                 <li><a href="#hero">Home</a></li>
                 <li><a href="#about">About</a></li>
                 <li><a href="#skills">Skills</a></li>
@@ -237,6 +307,23 @@
     </footer>
 
     <script>
+        // Hamburger menu toggle
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.getElementById('nav-menu');
+        
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+        
+        // Close menu when a link is clicked
+        document.querySelectorAll('#nav-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+            });
+        });
+
         // Smooth scrolling for navigation links
         document.querySelectorAll('nav a').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
